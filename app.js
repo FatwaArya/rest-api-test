@@ -19,7 +19,7 @@ app.get('/orang/:nama', (req, res) => { //endpoint get untuk mendapatakan nama
 app.post('/orang', (req, res) => {//endpoint post untuk membuat orang
     var namaOrang = req.body.nama//merequest nama menggunakan body pada endpoint untuk ditampilkan
     var alamat = req.body.alamat//merequest alamat menggunakan body pada endpoint untuk ditampilkan yang key sudah di deklrasikan di postman
-    res.end('Menampilkan orang baru, atas nama: ' + namaOrang + ', yang beralamat di ' + alamat)//menggunakan res.end untuk mengakhiri respon dan menampilkan hasil
+    res.end('Menampilkan orang baru, atas nama: ' + namaOrang + ', yang beralamat di ' + alamat)//menggunakan res.end untuk mengakhiri respons dan menampilkan hasil
 })
 
 app.delete('/orang/:id', (req, res) => { //endpoint delete untuk menghapus orang dengan menggunakan id 
