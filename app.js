@@ -1,11 +1,11 @@
 
 const express = require('express') //import express
 const bodyParser = require('body-parser') //deklarasi body-parser
+const req = require('express/lib/request')
 const app = express()              //deklarasi variabel express
 const port = 8080                  //deklarasi port
-const { title } =
 
-    app.use(express.json())
+app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
@@ -120,6 +120,156 @@ app.delete("/books/:id", (req, res) => {
             }
         })
     }
+})
+// konversi suhu
+//convert celsius to fahrenheit, kelvin, reamur using express
+app.get("/convert/celcius/:suhu", (req, res) => {
+
+    const suhu = parseInt(req.params.suhu);
+    const fahrenheit = suhu * 1.8 + 32;
+    const kelvin = suhu + 273;
+    const reamur = suhu * 0.8;
+    res.send({
+        message: "Berhasil mengubah suhu",
+        data: {
+            fahrenheit,
+            kelvin,
+            reamur,
+        }
+    })
+})
+
+app.get("/convert/fahrenheit/:suhu", (req, res) => {
+
+    const suhu = parseInt(req.params.suhu);
+    const celsius = (suhu - 32) / 1.8;
+    const kelvin = (suhu + 459.67) * 5 / 9;
+    const reamur = (suhu - 32) * 4 / 9;
+    res.send({
+        message: "Berhasil mengubah suhu",
+        data: {
+            celsius,
+            kelvin,
+            reamur,
+        }
+    })
+})
+
+app.get("/convert/kelvin/:suhu", (req, res) => {
+    const suhu = parseInt(req.params.suhu);
+    const celsius = suhu - 273;
+    const fahrenheit = suhu * 1.8 - 459.67;
+    const reamur = suhu * 0.8 - 273;
+    res.send({
+        message: "Berhasil mengubah suhu",
+        data: {
+            celsius,
+            fahrenheit,
+            reamur,
+        }
+    })
+})
+//reamur
+app.get("/convert/reamur/:suhu", (req, res) => {
+    const suhu = parseInt(req.params.suhu);
+    const celsius = suhu * 1.25;
+    const fahrenheit = suhu * 2.25 + 32;
+    const kelvin = suhu * 1.25 + 273;
+    res.send({
+        message: "Berhasil mengubah suhu",
+        data: {
+            celsius,
+            fahrenheit,
+            kelvin,
+        }
+    })
+})
+
+//convert decimal, binary, octal, hexadecimal using express
+app.get("/convert/decimal/:angka", (req, res) => {
+    const angka = parseInt(req.params.angka);
+    const binary = angka.toString(2);
+    const octal = angka.toString(8);
+    const hexadecimal = angka.toString(16);
+    res.send({
+        message: "Berhasil mengubah angka",
+        data: {
+            binary,
+            octal,
+            hexadecimal,
+        }
+    })
+})
+
+app.get("/convert/binary/:angka", (req, res) => {
+    const angka = parseInt(req.params.angka);
+    const decimal = parseInt(angka, 2);
+    const octal = parseInt(angka, 8);
+    const hexadecimal = parseInt(angka, 16);
+    res.send({
+        message: "Berhasil mengubah angka",
+        data: {
+            decimal,
+            octal,
+            hexadecimal,
+        }
+    })
+})
+
+app.get("/convert/octal/:angka", (req, res) => {
+    const angka = parseInt(req.params.angka);
+    const decimal = parseInt(angka, 8);
+    const binary = parseInt(angka, 2);
+    const hexadecimal = parseInt(angka, 16);
+    res.send({
+        message: "Berhasil mengubah angka",
+        data: {
+            decimal,
+            binary,
+            hexadecimal,
+        }
+    })
+})
+
+app.get("/convert/hexadecimal/:angka", (req, res) => {
+    const angka = parseInt(req.params.angka);
+    const decimal = parseInt(angka, 16);
+    const binary = parseInt(angka, 2);
+    const octal = parseInt(angka, 8);
+    res.send({
+        message: "Berhasil mengubah angka",
+        data: {
+            decimal,
+            binary,
+            octal,
+        }
+    })
+})
+
+//calculate BMI using express
+app.post("/bmi", (req, res) => {
+    const { weight, height } = req.body;
+    const bmi = weight / (height * height);
+    //calculate category
+    let category;
+    if (bmi < 18.5) {
+        category = "Underweight";
+    } else if (bmi >= 18.5 && bmi <= 24.9) {
+        category = "Normal";
+    } else if (bmi >= 25 && bmi <= 29.9) {
+        category = "Overweight"
+    } else if (bmi <= 30) {
+        category = "Obese"
+    } else {
+        category = "Error"
+    }
+    res.send({
+        message: "Berhasil menghitung BMI",
+        data: {
+            bmi,
+            category,
+        }
+    })
 })
 
 
